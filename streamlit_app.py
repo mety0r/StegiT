@@ -12,8 +12,8 @@ def build_generator():
     model.add(tf.keras.layers.BatchNormalization())
     model.add(tf.keras.layers.Dense(512, activation='relu'))
     model.add(tf.keras.layers.BatchNormalization())
-    model.add(tf.keras.layers.Dense(28 * 28 * 1, activation='tanh'))  # Output layer with tanh activation
-    model.add(tf.keras.layers.Reshape((28, 28, 1)))  # Reshape to 28x28x1 image
+    model.add(tf.keras.layers.Dense(28 * 28 * 1, activation='tanh')) 
+    model.add(tf.keras.layers.Reshape((28, 28, 1)))  
     return model
 
 # Function to build the discriminator model
@@ -22,26 +22,26 @@ def build_discriminator():
     model.add(tf.keras.layers.Flatten(input_shape=(28, 28, 1)))
     model.add(tf.keras.layers.Dense(512, activation='relu'))
     model.add(tf.keras.layers.Dense(256, activation='relu'))
-    model.add(tf.keras.layers.Dense(1, activation='sigmoid'))  # Output layer with sigmoid activation
+    model.add(tf.keras.layers.Dense(1, activation='sigmoid'))  
     return model
 
 # Function to train the GAN
 def train_gan(generator, discriminator, gan, epochs=1000, batch_size=128, sample_interval=100):
-    # Example: Implement training logic here
+    
     for epoch in range(epochs):
-        # Example: Training steps
+        
         if epoch % sample_interval == 0:
             # Generate images and save/display them
             noise = np.random.normal(0, 1, (1, 100))
             generated_image = generator.predict(noise)
-            save_generated_image(generated_image, epoch)  # Example function to save images
+            save_generated_image(generated_image, epoch) 
 
 # Function to save generated images
 def save_generated_image(image, epoch):
     if not os.path.exists('generated_images'):
         os.makedirs('generated_images')
     image = tf.squeeze(image, axis=0)
-    image = (image + 1) / 2.0  # Scale back to [0, 1]
+    image = (image + 1) / 2.0  
     image = tf.image.convert_image_dtype(image, tf.uint8)
     tf.keras.preprocessing.image.save_img(f'generated_images/generated_{epoch}.png', image)
 
@@ -88,3 +88,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
